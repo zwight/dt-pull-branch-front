@@ -11,6 +11,7 @@
 		"@types/react": "^18.0.0",
 		"@types/react-dom": "^18.0.0",
 		"antd": "^5.6.1",
+		"gh-pages": "^5.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-scripts": "5.0.1",
@@ -27,7 +28,8 @@
 		"stylelint": "ko stylelint ./**/*.{css,sass,scss,less} --concurrency",
 		"stylelint:fix": "ko stylelint ./**/*.{css,sass,scss,less} --write --concurrency",
 		"lint": "turbo run prettier eslint stylelint --no-cache",
-		"lint:fix": "turbo run prettier:fix eslint:fix stylelint:fix --no-cache"
+		"lint:fix": "turbo run prettier:fix eslint:fix stylelint:fix --no-cache",
+		"deploy": "npm run build && gh-pages -d dist"
 	},
 	"eslintConfig": {
 		"extends": [
