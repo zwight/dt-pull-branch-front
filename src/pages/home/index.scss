@@ -1,0 +1,9 @@
+.form-item-container{
+    width: 500px;
+    margin-left: 50%;
+    transform: translate(-50%, 100px);
+    .ant-form-item-control-input-content{
+        display: flex;
+        align-items: center;
+    }
+}
