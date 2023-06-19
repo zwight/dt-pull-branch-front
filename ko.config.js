@@ -8,6 +8,7 @@ const finalKoConfig = (function () {
   const baseKoConfig = {
     entry: path.join(APP_PATH, './index.tsx'),
     outputPath: BUILD_PATH,
+    publicPath: './',
     staticPath: APP_PATH,
     htmlTemplate: path.join(ROOT_PATH, './public/index.html'),
     alias: {
