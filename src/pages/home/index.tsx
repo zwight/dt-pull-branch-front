@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Button, Form, Input, message, Select, Switch } from "antd";
 
 import api from "../../api";
@@ -18,22 +18,19 @@ export default function Home() {
         values.path = PUBLIC_PATH + values.path;
         setLoading(true);
 
-        api.pullBranch(values).then(res => {
-            if (res.code === 1) {
-                message.success('分支拉取成功');
-            } else {
-                message.error(res.message);
-            }
+        api.pullBranch(values).then(_res => {
+            alert('分支拉取成功');
         }).catch(error => {
             message.error(error);
         }).finally(() => {
             setLoading(false);
         });
     };
-
-    return (<Form className="form-item-container" layout="vertical" form={form} initialValues={initialValues} onFinish={onFinish}>
+    return (<Form className="form-item-container" form={form} initialValues={initialValues} onFinish={onFinish}>
         <Form.Item label="前端项目" name="isFront" valuePropName="checked" rules={[{ required: true, message: '请选择是否为前端项目' }]}>
             <Switch onChange={(checked) => {
+                form.resetFields();
+                form.setFieldValue('isFront', checked);
                 setProjectList(checked ? projectObj.front : projectObj.service);
             }}
             />
@@ -58,6 +55,31 @@ export default function Home() {
         <Form.Item label="目标分支" name="newBranchName" rules={[{ required: true, message: '请输入目标端分支名' }]}>
             <Input placeholder="请输入目标端分支名" />
         </Form.Item>
+        <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) => prevValues.projects !== currentValues.projects}
+        >
+            {({ getFieldValue }) =>
+                (getFieldValue('projects')?.includes('flinkx')) && <Fragment>
+                <Form.Item label="FlinkX源端分支" name="flinkxBranchName" rules={[{ required: true, message: '请输入FlinkX源端分支名' }]}>
+                    <Input placeholder="请输入FlinkX源端分支名" />
+                </Form.Item>
+                <Form.Item label="FlinkX目标分支" name="newFlinkxBranchName" rules={[{ required: true, message: '请输入FlinkX目标端分支名' }]}>
+                    <Input placeholder="请输入FlinkX目标端分支名" />
+                </Form.Item>
+            </Fragment>
+            }
+        </Form.Item>
+        {/* <Form.Item noStyle dependencies={['projects']}>
+        {(form.getFieldValue('projects')?.includes('flinkx')) && <Fragment>
+            <Form.Item label="FlinkX源端分支" name="flinkxBranchName" rules={[{ required: true, message: '请输入FlinkX源端分支名' }]}>
+                <Input placeholder="请输入FlinkX源端分支名" />
+            </Form.Item>
+            <Form.Item label="FlinkX目标分支" name="newFlinkxBranchName" rules={[{ required: true, message: '请输入FlinkX目标端分支名' }]}>
+                <Input placeholder="请输入FlinkX目标端分支名" />
+            </Form.Item>
+        </Fragment>}
+        </Form.Item> */}
         <Form.Item style={{ textAlign: "right" }}>
             <Button type="primary" htmlType="submit" loading={loading}>
                 提交

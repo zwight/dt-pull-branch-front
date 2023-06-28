@@ -1,7 +1,3 @@
-
-import { authAfterFormated } from '../utils/notice';
-
-// import ProgressBar from 'widgets/progress-bar';
 class Http {
     /* eslint-disable */
     get(url: any, params: any) {
@@ -33,21 +29,13 @@ class Http {
     }
 
     request(url: any, options: any) {
-        // ProgressBar.show()
         options.credentials = 'same-origin';
         return (
             fetch(url, options)
-                // .then(authBeforeFormate)
                 .then((response: any) => {
-                    setTimeout(() => {
-                        // ProgressBar.hide()
-                    }, 300);
-                    return response.json();
+                    return response;
                 })
-                .then(authAfterFormated)
                 .catch((err: any) => {
-                    // ProgressBar.hide()
-                    console.log(err);
                     return err;
                 })
         );
